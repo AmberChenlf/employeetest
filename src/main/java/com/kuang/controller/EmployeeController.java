@@ -23,5 +23,11 @@ public class EmployeeController {
         return "emp/list";
     }
 
+    @RequestMapping("/emp")
+    public String addEmployee(){
+        return "emp/add";
+
+    }
+
 
 }
