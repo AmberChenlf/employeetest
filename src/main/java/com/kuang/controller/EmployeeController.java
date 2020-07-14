@@ -1,6 +1,8 @@
 package com.kuang.controller;
 
+import com.kuang.dao.DepartmentDao;
 import com.kuang.dao.EmployeeDao;
+import com.kuang.pojo.Department;
 import com.kuang.pojo.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,19 +15,30 @@ import java.util.Collection;
 public class EmployeeController {
     @Autowired
     EmployeeDao employeeDao;
+
+    @Autowired
+    DepartmentDao departmentDao;
     @RequestMapping("/emps")
     public String getAllEmployee(Model model){
         Collection<Employee> employees = employeeDao.getAllEmployee();
-        for(Employee em: employees){
-            System.out.println(em.getId());
-        }
         model.addAttribute("emps", employees);
         return "emp/list";
     }
 
     @RequestMapping("/emp")
-    public String addEmployee(){
+    public String addEmployee(Model model){
+        Collection<Department> des = departmentDao.getAllDepartment();
+
+        model.addAttribute("des", des);
         return "emp/add";
+
+    }
+
+    @RequestMapping("/emp2")
+    public String add(Employee employee){
+        System.out.println(employee);
+        employeeDao.add(employee);
+        return "redirect:/emps";
 
     }
 
